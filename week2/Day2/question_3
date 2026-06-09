@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+
+        int n = s.size();
+        int k = p.size();
+
+        vector<int> ans;
+
+        if(k > n)
+            return ans;
+
+        vector<int> target(26,0);
+        vector<int> window(26,0);
+
+        for(char c : p)
+            target[c-'a']++;
+
+        int left = 0;
+
+        for(int right=0; right<n; right++){
+
+            window[s[right]-'a']++;
+
+            if(right-left+1 > k){
+                window[s[left]-'a']--;
+                left++;
+            }
+
+            if(right-left+1 == k){
+
+                if(window == target)
+                    ans.push_back(left);
+
+            }
+        }
+
+        return ans;
+    }
+};
